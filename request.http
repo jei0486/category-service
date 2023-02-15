@@ -10,6 +10,11 @@ GET http://localhost:8080/categories
 GET http://localhost:8080/categories?upperCatCode=1
 
 ###
+# 카테고리 상세 조회
+# GET /categories/1
+GET http://localhost:8080/categories/1
+
+###
 # 1차 카테고리 추가
 # POST /categories
 POST http://localhost:8080/categories

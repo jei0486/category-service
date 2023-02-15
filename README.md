@@ -124,9 +124,10 @@ docker image ls
 docker run -d -p 8080:8080 --name category-service jei0486/category-service
 
 # 8080 port 가 아닌 다른 port 로 실행시키고 싶을경우, 
-# 여러 방법이 있지만 host port number 부분을 수정하여 실행하면 된다.
+# 여러 방법이 있지만 host port number 부분을 수정하여 실행하면 됩니다.
 docker run -d -p <host port number>:8080 --name category-service jei0486/category-service
 
 # 컨테이너 확인
 docker ps
 ```
+프로젝트 ROOT 폴더의 request.http 파일을 이용하여 VSCode, IntelliJ IDE 에서 http 요청을 테스트 해볼 수 있습니다.

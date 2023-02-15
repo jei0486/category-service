@@ -26,13 +26,12 @@ public class CategoryRestController {
             return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.getChildCategoryList(upperCatCode)));
         } else {
             return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.selectCategories()));
-
         }
 
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Response> detailCategory(@RequestParam(required = false) Long id){
+    private ResponseEntity<Response> detailCategory(@PathVariable Long id){
         return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.detailCategory(id)));
     }
 
