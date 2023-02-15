@@ -1,0 +1,63 @@
+#### 카테고리 http file ###
+###
+# 카테고리 조회 (전체)
+# GET /categories
+GET http://localhost:8080/categories
+
+###
+# 카테고리 조회 (하위카테고리)
+# GET /categories?upperCatCode={upperCatCode}
+GET http://localhost:8080/categories?upperCatCode=1
+
+###
+# 1차 카테고리 추가
+# POST /categories
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+    "catName":"상의",
+    "status": "ACTIVE",
+    "catLevel": 1
+}
+
+###
+# 2차 카테고리 추가
+# POST /categories
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+    "catLevel":2,
+    "catName":"니트",
+    "upperCatCode":1,
+    "status": "ACTIVE"
+}
+
+###
+# 1차 카테고리 수정
+# PUT /categories/{id}
+PUT http://localhost:8080/categories/5
+Content-Type: application/json
+
+{
+    "catName":"상의/하의",
+    "status": "READY",
+    "catLevel": 3
+}
+###
+# 2차 카테고리 수정
+# PUT /categories/{id}
+PUT http://localhost:8080/categories/2
+Content-Type: application/json
+
+{
+    "catLevel":2,
+    "catName":"니트",
+    "upperCatCode":"C010000",
+    "status": "ACTIVE"
+}
+###
+# 카테고리 삭제
+# DELETE /categories/{id}
+DELETE http://localhost:8080/categories/3

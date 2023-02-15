@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+profiles:
+  - name: dev                 # skaffold 실행시 -p로 정의된 profile
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.VER}}"
+      local:
+        push: false # false 는 로컬 테스트 /  real 은 hub 에 image push
+      artifacts:
+        - image: jei0486/category-service
+          jib:
+            args:
+              - -DskipTests
+              - "-Djib.container.environment=SPRING_PROFILES_ACTIVE=dev"   # jib 플러그인을 통해 real profile 에 대해 수행
+            fromImage: openjdk:11.0.11-jre-slim                            # 실행을 위한 runtime image
