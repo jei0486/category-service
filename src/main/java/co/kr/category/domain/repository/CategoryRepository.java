@@ -14,6 +14,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findAllByStatus(CategoryStatus status);
 
-    Category findByIdAndStatus(Long id, CategoryStatus status);
+    Category findByCatLevelAndStatus(Integer level, CategoryStatus status);
 
 }

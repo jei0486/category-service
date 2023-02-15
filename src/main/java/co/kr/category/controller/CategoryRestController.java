@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @RequestMapping("/categories")
@@ -21,7 +22,18 @@ public class CategoryRestController {
     @GetMapping("")
     private ResponseEntity<Response> selectCategories(@RequestParam(required = false) Long upperCatCode){
 
-        return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.selectCategories(upperCatCode)));
+        if (Optional.ofNullable(upperCatCode).orElse(0L) != 0){
+            return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.getChildCategoryList(upperCatCode)));
+        } else {
+            return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.selectCategories()));
+
+        }
+
+    }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<Response> detailCategory(@RequestParam(required = false) Long id){
+        return ResponseEntity.ok().body(new Response(HttpStatus.NO_ERROR,categoryService.detailCategory(id)));
     }
 
     @PostMapping("")

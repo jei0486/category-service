@@ -20,12 +20,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryResponseDto> selectCategories(Long upperCatCode){
-
-        if (Optional.ofNullable(upperCatCode).orElse(0L) != 0){
-            return getChildCategoryList(upperCatCode);
-        }
-
+    @Override
+    public List<CategoryResponseDto> selectCategories() {
         List<CategoryResponseDto> categoryResponseDtoList = new ArrayList<>();
         List<Category> categoryList = categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
         CategoryResponseDto categoryResponseDto = null;
@@ -63,19 +59,24 @@ public class CategoryServiceImpl implements CategoryService {
         return secondCategoryDtoList;
     }
 
+    @Override
+    public CategoryResponseDto detailCategory(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(()
+                -> new CategoryNotFoundException("존재하지 않는 카테고리 입니다."));
+        CategoryResponseDto categoryResponseDto = CategoryResponseDto.builder()
+                .id(category.getId())
+                .catLevel(category.getCatLevel())
+                .catName(category.getCatName())
+                .upperCatCode(category.getUpperCatCode())
+                .status(category.getStatus())
+                .build();
+        return categoryResponseDto;
+    }
+
+
     @Transactional
     @Override
     public void addCategory(CategoryRequestDto categoryRequestDto) {
-
-        // TODO 캐싱 REDIS
-
-        // RDBMS 저장
-        saveCategory(categoryRequestDto);
-
-    }
-
-    @Override
-    public void saveCategory(CategoryRequestDto categoryRequestDto) {
 
         // 상위 카테고리 코드(upperCatCode) 가 DTO 에 있다면 DB 에 존재하는지 Check
         if (Optional.ofNullable(categoryRequestDto.getUpperCatCode()).orElse(0L) != 0){
@@ -110,7 +111,6 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpperCatCode(categoryRequestDto.getUpperCatCode());
         categoryRepository.save(category);
 
-        // TODO 캐시 업데이트
 
     }
 
@@ -126,8 +126,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.delete(category);
 
-        // TODO 캐시 업데이트
     }
-
 
 }

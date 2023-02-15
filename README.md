@@ -1,5 +1,3 @@
-# 온라인 쇼핑몰의 상품 카테고리
-
 # 웹서버를 리눅스 기준으로 실행하기 위한 필요한 설치/빌드 방법
 
 웹서버를 리눅스 기준으로 실행하는 방법은 
@@ -124,6 +122,10 @@ docker image ls
 ```shell
 # 컨테이너 실행
 docker run -d -p 8080:8080 --name category-service jei0486/category-service
+
+# 8080 port 가 아닌 다른 port 로 실행시키고 싶을경우, 
+# 여러 방법이 있지만 host port number 부분을 수정하여 실행하면 된다.
+docker run -d -p <host port number>:8080 --name category-service jei0486/category-service
 
 # 컨테이너 확인
 docker ps
