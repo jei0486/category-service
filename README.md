@@ -59,32 +59,32 @@ sudo install skaffold /usr/local/bin/
 # 패키지 업데이트
 sudo apt-get update -y
 
-sudo apt-get install ca-certificates \ 
-    software-properties-common \
-    apt-transport-https \
-    gnupg \
-    lsb-release -y
+sudo apt-get install ca-certificates software-properties-common apt-transport-https  gnupg lsb-release -y
 
-# GPG 키 및 Repo 추가 
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+# 도커 GPG key 추가
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
+
+# 도커 레파지토리 등록
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
+  
 # 패키지 업데이트
-sudo apt update -y
+sudo apt-get update
 
 # docker 엔진 install
-sudo apt install docker-ce docker-ce-cli containerd.io -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 
 # docker version 확인
 sudo docker version
 
-# 일반 유저에게 docker 명령어 권한 부여
+## 일반 유저에게도 docker 명령어 권한 부여시 아래 task 수행
+# (선택) 일반 유저에게 docker 명령어 권한 부여
 sudo usermod -aG docker $USER
-sudo chmod 666 /var/run/docker.sock
+
+# (선택) 해당 user 로 ssh 재 접속후 docker version 확인
+docker version
 ```
 
 웹서버 소스 git repository 를 clone 받습니다.
